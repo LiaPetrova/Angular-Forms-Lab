@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://kit.fontawesome.com/3cd69e2433.js" crossorigin="anonymous"></script>
+  <title>Document</title>
+</head>
+
+<body>
+
+<div class="container">
+
+  <form (ngSubmit)="onSubmit()" #registerForm="ngForm" action="" method="post">
+    
+    <fieldset>
+      <h1>Registration Form</h1>
+
+      <p class="field field-icon">
+        <label for="username"><span><i class="fas fa-user"></i></span></label>
+        <input type="text" #username="ngModel" ngModel name="username" id="username" class="error" placeholder="Mark Ulrich" required pattern="^[A-Z][a-z]+\s[A-Z][a-z]+$">
+      </p>
+
+      <ng-container *ngIf="username.touched && username.invalid">
+        <div *ngIf="username.errors?.['required']" class="alert alert-danger">
+          <p class="error">
+          Username is required!
+          </p>
+        </div>
+        <div *ngIf="username.errors?.['pattern']" class="alert alert-danger">
+          <p class="error">
+          Username should be valid!
+          </p>
+        </div>
+      </ng-container>
+
+      <!-- if error -->
+      <!-- <p class="error">
+        Message for Error
+      </p> -->
+      <!-- end if error -->
+      
+      <p class="field field-icon">
+        <label for="email"><span><i class="fas fa-envelope"></i></span></label>
+        <input type="text" #email="ngModel" ngModel required email name="email" id="email" placeholder="marк@gmial.com">
+      </p>
+
+      <ng-container *ngIf="email.touched && email.invalid">
+        <div *ngIf="email.errors?.['required']" class="alert alert-danger">
+          <p class="error">
+          Email is required!
+          </p>
+        </div>
+        <div *ngIf="email.errors?.['email']" class="alert alert-danger">
+          <p class="error">
+          Email should be valid!
+          </p>
+        </div>
+      </ng-container>
+
+      <p class="field field-icon">
+        <label for="tel"><span><i class="fas fa-phone"></i></span></label>
+        <select name="tel" id="tel" class="tel">
+          <option *ngFor="let county of telBeginning" [value]="county">{{county}}</option>
+        </select>
+        <input type="text" #tel="ngModel" ngModel required minlength="9" name="tel" id="tel" placeholder="888 888" >
+      </p>
+
+      <ng-container *ngIf="tel.touched && tel.invalid">
+        <div *ngIf="tel.errors?.['required']" class="alert alert-danger">
+          <p class="error">
+          Telephone number is required!
+          </p>
+        </div>
+        <div *ngIf="tel.errors?.['minlength']" class="alert alert-danger">
+          <p class="error">
+          Telephone number must be at least 9 digits!
+          </p>
+        </div>
+      </ng-container>
+
+
+
+      <p class="field field-icon">
+        <label for="building"><span><i class="fas fa-building"></i></span></label>
+        <select name="building" #building="ngModel" ngModel id="building" class="building" default="Designer">
+          <option value="Designer" selected >Designer</option>
+          <option *ngFor="let singleBuilding of buildings" [value]="singleBuilding" >{{singleBuilding}}</option>
+        </select>
+      </p>
+
+      <ng-container ngModelGroup="passwords" #passwordsGroup="ngModelGroup">
+      <p class="field field-icon">
+        <label for="password"><span><i class="fas fa-lock"></i></span></label>
+        <input type="password" #password="ngModel" minlength="3" maxlength="16" pattern="^[a-zA-Z\d]+$" ngModel name="password" id="password" placeholder="******">
+      </p>
+
+      <p class="field field-icon">
+        <label for="re-password"><span><i class="fas fa-lock"></i></span></label>
+        <input type="password" #repassword="ngModel" ngModel name="re-password" id="re-password" placeholder="******">
+      </p>
+    </ng-container>
+
+    
+    <ng-container *ngIf="password.touched && password.invalid">
+      <div *ngIf="password.errors?.['minlength'] || password.errors?.['maxlength']" class="alert alert-danger">
+        <p class="error">
+        Password should be between 3 and 16 digits!
+        </p>
+      </div>
+      <div *ngIf="password.errors?.['pattern'] || password.errors?.['maxlength']" class="alert alert-danger">
+        <p class="error">
+        Password should contain only letters and diggits!
+        </p>
+      </div>
+    </ng-container>
+    
+    <ng-container *ngIf="repassword.touched && repassword.value !== password.value">
+      <div class="alert alert-danger">
+        <p class="error">
+        Passwords don't match!
+        </p>
+      </div>
+    </ng-container>
+
+
+      <p>
+        <button [disabled]="registerForm.invalid">Create Account</button>
+      </p>
+      
+      <p class="text-center">
+        Have an account?
+        <a href="">Log In</a>
+      </p>
+      
+    </fieldset>
+  </form>
+</div>
+  
+
+</body>
+
+</html>
